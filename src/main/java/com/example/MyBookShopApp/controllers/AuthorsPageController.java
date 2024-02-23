@@ -23,14 +23,9 @@ public class AuthorsPageController {
         this.authorService = authorService;
     }
 
-    @ModelAttribute("authorsMap")
-    public Map<Character, List<String>> authorsMap() {
-        return authorService.getAuthorsData();
-    }
-
     @GetMapping("/authors")
-    public String authorsPage(/*Model model*/) {
-//        model.addAttribute("authorData", authorService.getAuthorsData());
+    public String authorsPage(Model model) {
+        model.addAttribute("authorsMap", authorService.getAuthorsData());
         return "/authors/index";
     }
 }

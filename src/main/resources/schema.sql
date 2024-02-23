@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS books;
 
-CREATE TABLE books
-(
+CREATE TABLE books (
     id        INT AUTO_INCREMENT PRIMARY KEY,
     author_id INT          NOT NULL,
     title     VARCHAR(250) NOT NULL,
@@ -11,8 +10,7 @@ CREATE TABLE books
 
 DROP TABLE IF EXISTS authors;
 
-create table authors
-(
+create table authors (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name  VARCHAR(50)

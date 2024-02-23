@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.data;
 
+import com.example.MyBookShopApp.SqlQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,14 @@ public class BookService {
     }
 
     public List<Book> getBooksData() {
-        List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rowNum) -> {
-            Book book = new Book();
-            book.setId(rs.getInt("id"));
-            String authorFirstName = authorService.getAuthor(rs.getInt("author_id")).getFirstName();
-            String authorLastName = authorService.getAuthor(rs.getInt("author_id")).getLastName();
-//            logger.info("BookService.getBooksData: autId = " + rs.getInt("author_id")
-//                    + ", authorFirstName " + authorFirstName
-//                    + " authorLastName " + authorLastName);
-//            logger.info("book auth id = " + rs.getInt("author_id") + " bookTitle = " + rs.getString("title"));
-            book.setAuthor(authorFirstName + " " + authorLastName);
-            book.setTitle(rs.getString("title"));
-            book.setPriceOld(rs.getString("price_old"));
-            book.setPrice(rs.getString("price"));
-            return book;
-        });
-        return new ArrayList<>(books);
+        return new ArrayList<>(jdbcTemplate.query(SqlQueries.getAllBooks(),
+                (ResultSet rs, int rowNum) -> new Book(
+                        rs.getInt("id"),
+                        authorService.getAuthorById(rs.getInt("author_id")),
+                        rs.getString("title"),
+                        rs.getString("price_old"),
+                        rs.getString("price")
+                )
+        ));
     }
 }

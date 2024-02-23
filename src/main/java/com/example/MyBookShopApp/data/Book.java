@@ -1,15 +1,15 @@
 package com.example.MyBookShopApp.data;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     private Integer id;
-    private String author;
+    private Author author;
     private String title;
     private String priceOld;
     private String price;
